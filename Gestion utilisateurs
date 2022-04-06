@@ -1,0 +1,38 @@
+Ma configuration :  
+Operating System: Kubuntu 21.10
+KDE Plasma Version: 5.24.4
+KDE Frameworks Version: 5.92.0
+Qt Version: 5.15.2
+Kernel Version: 5.13.0-39-lowlatency (64-bit)
+Graphics Platform: X11
+Processors: 8 × Intel® Core™ i7-2700K CPU @ 3.50GHz
+Memory: 15.6 Gio of RAM
+Graphics Processor: NVIDIA GeForce GT 710/PCIe/SSE2
+
+Je teste PAM USB. J'ai installé PAM, ajouté un utilisateur, testé puis ajouté un second utilisateur.
+Le second utilisateur ne fonctionne pas. Qu'elle solution ?
+______________________________________________________________________________________________________________________________________
+administrateur@Zalman:~$ pamusb-check vieux_loup && echo Ok || écho ÉCHEC   #Fonctionne
+* Authentication request for user "vieux_loup" (pamusb-check)
+sh: 1: Syntax error: "(" unexpected
+* Authentication device "my-usb-stick" is connected.
+* Performing one time pad verification...
+* Regenerating new pads...
+* Access granted.
+Ok
+
+administrateur@Zalman:~$ pamusb-check schupette && echo Ok || écho ÉCHEC    #Ne fonctionne pas
+* Authentication request for user "schupette" (pamusb-check)
+sh: 1: Syntax error: "(" unexpected
+* Authentication device "my-usb-stick" is connected.
+* Performing one time pad verification...
+* Regenerating new pads...
+* Unable to update pads.
+* Access granted.
+Ok
+administrateur@Zalman:~$ 
+________________________________________________________________________________________________________________________________________
+J'ai deux distribution installée (Kubuntu et Kubuntu LTS) avec les mêmes comptes et configuration identique.
+Puis utiliser la même clé USB pour PAM avec les deux OS ?
+
+Cordialement
