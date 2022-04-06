@@ -36,3 +36,99 @@ J'ai deux distribution installée (Kubuntu et Kubuntu LTS) avec les mêmes compt
 Puis utiliser la même clé USB pour PAM avec les deux OS ?
 
 Cordialement
+
+/etc/security/pam_usb.conf :
+<?xml version="1.0" ?><!--
+pamusb.conf: Configuration file for pam_usb.
+
+See http://www.pamusb.org/doc/configuring
+--><configuration>
+		<!-- Default options -->
+		<defaults>
+				<!-- Example:
+						<option name="debug">true</option>
+						<option name="deny_remote">true</option>
+				-->
+		</defaults>
+
+		<!-- Device settings -->
+		<devices>
+				<!-- Example:
+				Note: You should use pamusb-conf to add devices automatically.
+				<device id="MyDevice">
+						<vendor>SanDisk Corp.</vendor>
+						<model>Cruzer Titanium</model>
+						<serial>SNDKXXXXXXXXXXXXXXXX</serial>
+						<volume_uuid>6F6B-42FC</volume_uuid>
+						<option name="probe_timeout">10</option>
+				</device>
+				-->
+		<device id="my-usb-stick">
+	<vendor>Generic</vendor>
+	<model>Flash Disk</model>
+	<serial>ADE397E3</serial>
+	<volume_uuid>0009-6B91</volume_uuid>
+</device></devices>
+
+
+		<!-- User settings -->
+		<users>
+				<!-- Note: Use pamusb-conf to add a user, then you can tweak
+						manually the configuration here if needed.
+				-->
+
+				<!-- Example:
+						Authenticate user scox using "MyDevice", and configure pamusb-agent
+						to automatically start/stop gnome-screensaver on key insertion and
+						removal:
+						<user id="scox">
+								<device>MyDevice</device>
+								<option name="quiet">true</option>
+								<agent event="lock">
+									<cmd>gnome-screensaver-command -\-lock</cmd>
+									<env>DISPLAY=:1</env>
+									<env>DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus</env>
+									<env>XAUTHORITY=/run/user/1000/gdm/Xauthority</env>
+								</agent>
+								<agent event="unlock">
+									<cmd>gnome-screensaver-command -\-deactivate</cmd>
+									<env>DISPLAY=:1</env>
+									<env>DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus</env>
+									<env>XAUTHORITY=/run/user/1000/gdm/Xauthority</env>
+								</agent>
+						</user>
+
+						Configure user root to authenticate using MyDevice, but update one
+						time pads at every login (default is 1 hour):
+						<user id="root">
+								<device>MyDevice</device>
+								<option name="pad_expiration">0</option>
+						</user>
+				-->
+	<user id="vieux_loup">
+	<device>my-usb-stick</device>
+</user><user id="schupette">
+	<device>my-usb-stick</device>
+</user></users>
+
+		<!-- Services settings (e.g. gdm, su, sudo...) -->
+		<services>
+				<!-- Example: Speed up hotplugging by disabling one time pads -->
+				<!--
+				<service id="pamusb-agent">
+						<option name="one_time_pad">false</option>
+				</service>
+				-->
+
+				<!-- Disable output for 'su' (needed for gksu) -->
+				<!--
+				<service id="su">
+						<option name="quiet">true</option>
+				</service>
+				-->
+		</services>
+</configuration>
+
+
+
+
